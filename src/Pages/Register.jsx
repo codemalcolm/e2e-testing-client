@@ -1,21 +1,33 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
+import { Box, Button, Flex, Input } from "@chakra-ui/react";
 
 export default function Register() {
-  const [form, setForm] = useState({ username: '', password: '' });
+  const [form, setForm] = useState({ username: "", password: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://localhost:5000/register', form);
-    alert('Registered!');
+    await axios.post("http://localhost:5000/register", form);
+    alert("Registered!");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
-      <input placeholder="Username" onChange={e => setForm({...form, username: e.target.value})} />
-      <input placeholder="Password" type="password" onChange={e => setForm({...form, password: e.target.value})} />
-      <button type="submit">Register</button>
-    </form>
+    <Box width="320px">
+      <form onSubmit={handleSubmit}>
+        <Flex flexDirection={"column"} gap={"16px"}>
+          <h2>Register</h2>
+          <Input
+            placeholder="Username"
+            onChange={(e) => setForm({ ...form, username: e.target.value })}
+          />
+          <Input
+            placeholder="Password"
+            type="password"
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+          />
+          <Button type="submit">Register</Button>
+        </Flex>
+      </form>
+    </Box>
   );
 }
