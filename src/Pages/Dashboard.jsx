@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Text } from '@chakra-ui/react';
 
 export default function Dashboard() {
   const [message, setMessage] = useState('');
@@ -13,5 +14,5 @@ export default function Dashboard() {
     .catch(() => setMessage('Access denied'));
   }, []);
 
-  return <h2>{message}</h2>;
+  return <Text fontSize={"24px"}>⚠️ {message} ⚠️</Text>;
 }
