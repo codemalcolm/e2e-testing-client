@@ -1,18 +1,32 @@
 import { useState } from "react";
 import axios from "axios";
-import { Box, Button, Flex, Input, Spinner, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  Spinner,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import useFetchUserProfile from "../hooks/useFetchUserProfile";
+import UserPosts from "../components/UserPosts";
+import CreatePostModal from "../components/CreatePostModal";
 
 const UserPage = () => {
-  const {
-    userData,
-    loading,
-    error,
-    fetchProfileData,
-  } = useFetchUserProfile();
+  const { userData, loading, error, fetchProfileData } = useFetchUserProfile();
+
   const [isEditting, setIsEditting] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
+
+  const {
+    isOpen: isCreateOpen,
+    onOpen: onCreateOpen,
+    onClose: onCreateClose,
+  } = useDisclosure();
+
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleEditClick = () => {
     setNewUsername(userData?.username || "");
@@ -42,6 +56,10 @@ const UserPage = () => {
     } finally {
       setIsUpdating(false);
     }
+  };
+
+  const handlePostCreated = () => {
+    setRefreshKey((prev) => prev + 1);
   };
 
   return (
@@ -95,6 +113,18 @@ const UserPage = () => {
           )}
         </Box>
       )}
+
+      <Button mt={6} colorScheme="teal" onClick={onCreateOpen}>
+        Create Post
+      </Button>
+
+      <CreatePostModal
+        isOpen={isCreateOpen}
+        onClose={onCreateClose}
+        onPostCreated={handlePostCreated}
+      />
+
+      <UserPosts refreshKey={refreshKey} />
     </Flex>
   );
 };
