@@ -10,7 +10,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 
-const UserPosts = () => {
+const UserPosts = ({ refreshKey }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingPostId, setEditingPostId] = useState(null);
@@ -35,7 +35,7 @@ const UserPosts = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [refreshKey]);
 
   const handleDelete = async (id) => {
     try {
