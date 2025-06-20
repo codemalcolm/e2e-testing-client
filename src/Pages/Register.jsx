@@ -7,8 +7,12 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:5000/register", form);
-    alert("Registered!");
+    try {
+      await axios.post("http://localhost:5000/register", form);
+      alert("Registered!");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
