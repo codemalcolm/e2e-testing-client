@@ -2,11 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 import { Box, Button, Flex, Input, Text, useToast } from "@chakra-ui/react";
 import useLoginUser from "../hooks/useLoginUser";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [form, setForm] = useState({ username: "", password: "" });
   const { isLoading, error, loginUser } = useLoginUser();
   const toast = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,14 +16,15 @@ export default function Login() {
 
     if (error) {
       console.log("EBJBHEA");
-      return toast({
+      toast({
         title: "This user doesn't exist",
         status: "error",
         duration: 3000,
         isClosable: true,
       });
+      return;
     }
-    if (!isLoading) window.location.href = "/dashboard";
+    // navigate("/dashboard");
   };
 
   return (
