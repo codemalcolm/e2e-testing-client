@@ -11,8 +11,8 @@ export default function Login() {
     e.preventDefault();
     loginUser(form);
     setTimeout(() => {
+      if (error) return alert("Error occured :", error);
       alert("Logged in!");
-      if (error) alert("Error occured :", error);
       if (!isLoading) window.location.href = "/dashboard";
     }, [500]);
   };
