@@ -1,20 +1,27 @@
 import { useState } from "react";
 import axios from "axios";
-import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Text, useToast } from "@chakra-ui/react";
 import useLoginUser from "../hooks/useLoginUser";
 
 export default function Login() {
   const [form, setForm] = useState({ username: "", password: "" });
   const { isLoading, error, loginUser } = useLoginUser();
+  const toast = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    loginUser(form);
-    setTimeout(() => {
-      if (error) return alert("Error occured :", error);
-      alert("Logged in!");
-      if (!isLoading) window.location.href = "/dashboard";
-    }, [500]);
+    await loginUser(form);
+
+    if (error) {
+      console.log("EBJBHEA");
+      return toast({
+        title: "This user doesn't exist",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+    if (!isLoading) window.location.href = "/dashboard";
   };
 
   return (
