@@ -42,7 +42,7 @@ const AllPostsList = () => {
           <Heading size="md">{post.title}</Heading>
           <Text mt={2}>{post.postText}</Text>
           <Text mt={2} fontSize="sm" color="gray.500">
-            Author: {post.authorId.username}
+            Author: {post.authorId?.username}
           </Text>
         </Box>
       ))}
