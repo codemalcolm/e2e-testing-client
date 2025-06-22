@@ -82,6 +82,7 @@ const UserPosts = ({ refreshKey }) => {
       ) : (
         posts.map((post) => (
           <Box
+            id={post._id}
             key={post._id}
             borderWidth="1px"
             borderRadius="lg"
